@@ -13,10 +13,10 @@
 <script>
 import CarouselItem from "./CarouselItem.vue";
 
-export default{
+export default {
     props: ['slides'],
     components: { CarouselItem },
-}
+};
 </script>
 
 <style scoped>

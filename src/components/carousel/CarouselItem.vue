@@ -6,6 +6,6 @@
 
 <script>
 export default {
-    props:['slide '],
+    props:['slide'],
 };
 </script>
