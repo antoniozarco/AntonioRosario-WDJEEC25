@@ -1,26 +1,22 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <carousel :slides="slides"></carousel>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Carousel from "./components/carousel/Carousel.vue";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  components: { Carousel },
+  data: () => ({
+    slides: [
+      "https://picsum.photos/id/1032/900/400",
+      "https://picsum.photos/id/1033/900/400",
+      "https://picsum.photos/id/1034/900/400",
+      "https://picsum.photos/id/1035/900/400",
+      "https://picsum.photos/id/1036/900/400", 
+    ]
+  })
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
