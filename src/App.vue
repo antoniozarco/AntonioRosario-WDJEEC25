@@ -58,7 +58,7 @@ export default {
     startSlideInterval(){
       this.slideIntervalId = setInterval(() => {
         this.moveSlide('next');
-      }, 3000);
+      }, 2000);
     },
     stopSlideInterval(){
       clearInterval(this.slideIntervalId);
