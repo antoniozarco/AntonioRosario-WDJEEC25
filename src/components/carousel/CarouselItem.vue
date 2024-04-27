@@ -1,61 +1,45 @@
 <template>
-    <transition :name="dir">
-        <div v-show="visible">
-            <slot></slot>
-        </div>
-    </transition>
-</template>
-
-<script>
-export default {
-    data() {
-        return {
-            index  : 0,
-        }
+    <div class="carousel-item" v-show="index === currentSlide">
+      <img v-if="slide.image" :src="slide.image" alt="Slide image">
+      <div v-else-if="slide.question">
+        <p>{{ slide.question }}</p>
+        <input v-if="slide.isAnswerInput" type="text" v-model="answer">
+        <button v-if="slide.isAnswerInput" @click="submitAnswer">Submit Answer</button>
+      </div>
+      <div v-else-if="slide.isDateInput">
+        <input type="date" v-model="date">
+        <button @click="submitDate">Submit Date</button>
+      </div>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    props: ['slide', 'index', 'currentSlide'],
+    data: () => ({
+      date: null,
+      answer: null,
+    }),
+    methods: {
+      submitDate() {
+        this.$emit('submit-date', this.date);
+      },
+      submitAnswer() {
+        this.$emit('submit-answer', this.answer);
+      },
     },
-    computed : {
-        visible() {
-            return this.index === this.$parent.index;
-        },
-        dir() {
-            console.log(this.$parent.slideDirection)
-            return this.$parent.slideDirection;
-        },
-    }
-}
-</script>
-
-<style scoped>
-    .slide-left-enter-active {
-        animation: slide-left-in 0.5s ease-in;
-    }
-    .slide-left-leave-active {
-        animation: slide-left-out 0.5s ease-in;
-    }
-
-    @keyframes slide-left-in{
-        from  { transform: translateX(-100%);}
-        to { transform: translateX(0);} 
-    }
-
-    @keyframes slide-left-out{
-        from  { transform: translateX(0%);}
-        to { transform: translateX(100%);} 
-    }
-    
-
-    .slide-right-enter-active {
-        animation: slide-right-in 0.5s ease-in;
-    }
-    .slide-right-leave-active {
-        animation: slide-right-out 0.5s ease-in;
-    }
-    @keyframes slide-right-out{
-        from  { transform: translateX(0%);}
-        to { transform: translateX(-100%);} 
-    }
-    @keyframes slide-right-in{
-        from  { transform: translateX(100%);}
-        to { transform: translateX(0);} 
-    }
-</style>
+  };
+  </script>
+  
+  <style scoped>
+  .carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  </style>

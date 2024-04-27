@@ -1,57 +1,57 @@
 <template>
-    <div class="carousel"  @keydown="checkSlide($event)" tabindex="0">
-        <slot></slot>
-        <button @click.prevent="next" class="btn btn-next"><i class="fa fa-angle-right"></i></button>
-        <button @click.prevent="prev" class="btn btn-prev"><i class="fa fa-angle-left"></i></button>
+    <div class="carousel">
+        <div class="carousel-inner">
+            <carousel-indicators 
+                :total="slides.length" 
+                :current-slide="currentSlide" 
+                @change-slide="$emit('change-slide', $event)"
+                @click.native="stopSlideInterval"
+            ></carousel-indicators>
+            <carousel-item 
+                v-for="(slide, index) in slides" 
+                :slide="slide"
+                :key="`item-${index}`"
+                :current-slide="currentSlide"
+                :index="index"
+                @submit-date="$emit('submit-date', $event)"
+                @submit-answer="$emit('submit-answer', $event)"
+            ></carousel-item>
+        </div>
     </div>
 </template>
+
 <script>
+import CarouselItem from "./CarouselItem.vue";
+import CarouselIndicators from "./CarouselIndicators.vue";
+import CarouselNext from "./CarouselNext.vue";
+
 export default {
-    data () {
-        return {
-            index : 0,
-            slides : [],
-            slideDirection: '',
-        }
-    },
-    computed: {
-        slidesLength() {
-            return this.slides.length;
-        }
-    },
-    mounted(){
-        this.slides = this.$children;
-        this.slides.map( (slide,index) => {
-            slide.index = index;
-        });
+    props: ['slides', 'currentSlide'],
+    components: { CarouselItem , CarouselIndicators , CarouselNext },
+    data: () => ({
+        slideIntervalId: null,
+        date: null,
+    }),
+    beforeUnmount() {
+        clearInterval(this.slideIntervalId);
     },
     methods: {
-        next(){
-            this.index++;
-            if(this.index >= this.slidesLength){
-                this.index = 0;
-            }
-            this.slideDirection = 'slide-right';
+        stopSlideInterval() {
+            clearInterval(this.slideIntervalId);
         },
-        prev(){
-            this.index--;
-            if(this.index < 0){
-                this.index = this.slidesLength - 1;
-            }
-             this.slideDirection = 'slide-left';
-        },
-        checkSlide(event){
-            if(event.keyCode === 39){
-                this.next();
-            }else if (event.keyCode === 37){
-                this.prev();
-            }else {
-                return;
-            }
-        },
-    }
-}
+    },
+};
 </script>
-<style>
-    
+
+<style scoped>
+.carousel {
+    display: flex;
+    justify-content: center;
+}
+.carousel-inner {
+    position: relative;
+    width: 900px;
+    height: 500px;
+    overflow: hidden;
+}
 </style>
