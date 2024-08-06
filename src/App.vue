@@ -37,7 +37,7 @@ export default {
   components: { Carousel , CarouselIndicators, CarouselItem, CarouselNext},
   data: () => ({
     slides: [
-      { question: "Em que ano se deu a primeira edição das JEEC?", answer: "A primeira edição das JEEC foi em 2019.", isAnswerInput: true },
+      { question: "Em que ano se deu a primeira edição das JEEEEEEEEEEC?", answer: "A primeira edição das JEEC foi em 2019.", isAnswerInput: true },
       { isDateInput: true },
       { image: require("../challenge2.png") },
       { image: require("../challenge.png") },
